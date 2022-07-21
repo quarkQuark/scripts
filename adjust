@@ -1,5 +1,26 @@
 #!/usr/bin/sh
 
+fail() {
+    echo "Invalid argument $1"
+    echo
+    echo "Usage: adjust [-h|--help] COMMAND ARGUMENT"
+    echo
+    echo "Available commands:"
+    echo "  volume toggle            Toggle mute"
+    echo "  volume <+n%|-n%>         <Raise|Lower> volume by n%"
+    echo "  brightness <+n%|-n%>     <Raise|Lower> brightness by n%"
+    exit 1
+}
+
+[ ! -z $1 ] && cmd=$1 || fail "$@ (See help text)"
+[ ! -z $2 ] && arg=$2 || fail "$@ (See help text)"
+
+# For example, split +10% -> [+,10%]
+amount=0
+[ $arg != "toggle" ] \
+    && amount=`echo $arg | cut -c 2-` \
+    && arg=`echo $arg | cut -c 1`
+
 notify() {
     notify-send.py $1 $2 \
       --hint boolean:transient:true \
@@ -16,7 +37,7 @@ adjust_brightness() {
     case $1 in
         "+") brightnessctl s +${2} && notify Brightness `get_brightness` ;;
         "-") brightnessctl s ${2}- && notify Brightness `get_brightness` ;;
-        *) notify-send.py "Error:" "Invalid argument $1 (expected + or -)" ;;
+        *) fail "$1 (expected + or -)" ;;
     esac
 }
 
@@ -29,13 +50,13 @@ adjust_volume() {
 	    pactl -- set-sink-mute 0 0 \
 	    && pactl -- set-sink-volume 0 $1$2 \
 	    && notify Volume `pactl -- get-sink-volume 0 | awk '{ print $5 }'` ;;
-        *) notify-send.py "Error:" "Invalid argument $1 (expected \"toggle\", \"+\" or \"-\")" ;;
+        *) fail "$1 (expected \"toggle\", \"+\" or \"-\")" ;;
     esac
 }
 
-case $1 in
-    "brightness") adjust_brightness $2 $3 ;;
-    "volume") adjust_volume $2 $3 ;;
-    *) notify-send.py "Error:" "Invalid argument $1 (expected \"brightness\" or \"volume\")" ;;
+case $cmd in
+    "brightness") adjust_brightness $arg $amount ;;
+    "volume") adjust_volume $arg $amount ;;
+    *) fail "$1 (expected \"brightness\" or \"volume\")" ;;
 esac
 		     

@@ -1,14 +1,15 @@
 #!/usr/bin/sh
 
 # Command line arguments
-MENU_CMD=$1
-EDITOR_CMD=$2
+menu_cmd=$1
+editor_cmd=$2
 
 # My scripts directory
 scripts="$HOME/.scripts/"
 
 # Use $MENU_CMD to choose a file from the scripts directory
-choice=`ls $scripts | $MENU_CMD 'Edit script: '`
+cd $scripts
+choice=`fd -tx | cut -c 3- | $menu_cmd 'Edit script: '`
 
 # If something is chosen (ESC not pressed), then edit it
-[ -z $choice ] || $EDITOR_CMD "${scripts}${choice}"
+[ -z $choice ] || $editor_cmd "${scripts}${choice}"
