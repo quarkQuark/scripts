@@ -1,7 +1,7 @@
-#+TITLE: My scripts
+#+TITLE: Scripts
 #+STARTUP: overview
 
-Here is a small collection of shell scripts which I have written to automate some common tasks. They should all be POSIX-compliant and therefore usable with a faster shell such as =dash=.
+A small collection of shell scripts to automate some common tasks. They should all be POSIX-compliant and therefore usable with a faster shell such as =dash=.
 
 | Script                   | Description           | Arguments        | Dependencies                        |
 |--------------------------+-----------------------+------------------+-------------------------------------|
