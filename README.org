@@ -3,15 +3,15 @@
 
 A small collection of shell scripts to automate some common tasks. They should all be POSIX-compliant and therefore usable with a faster shell such as =dash=.
 
-| Script              | Description           | Arguments        | Dependencies                        |
-|---------------------+-----------------------+------------------+-------------------------------------|
-| adjust              | Brightness and volume | See bullet point | =bc brightnessctl aur/notify-send-py= |
-| get-spotify         | Get current song      |                  | =playerctl=                   |
-| menu-change-colours | Choose a colourscheme | =<menu>=           |                                     |
-| menu-edit-config    | Edit a config file    | =<menu> <editor>=  |                                     |
-| menu-edit-script    | Edit a script         | =<menu> <editor>=  | =fd=                                  |
-| menu-read-pdf       | Read a PDF file       | =<menu> <reader>=  | =ripgrep=                             |
+To use rofi to display menus, pass =rofi -dmenu -i -p= as =<menu>=.
 
-- The supported colourschemes for =colourscheme= and =menu-edit-colourscheme= are currently =dracula=, =nord=, =solarized-dark= and =solarized-light=. The colour scripts change the colours for alacritty and neovim.
-- To use rofi to display menus, pass =rofi -dmenu -i -p= as =<menu>=.
+| Script              | Description           | Arguments       | Dependencies                        |
+|---------------------+-----------------------+-----------------+-------------------------------------|
+| adjust              | Brightness and volume | See below       | =bc brightnessctl aur/notify-send-py= |
+| get-spotify         | Get current song      |                 | =playerctl=                           |
+| menu-change-colours | Choose a colourscheme | =<menu>=          |                                     |
+| menu-edit-config    | Edit a config file    | =<menu> <editor>= |                                     |
+| menu-edit-script    | Edit a script         | =<menu> <editor>= | =fd=                                  |
+| menu-read-pdf       | Read a PDF file       | =<menu> <reader>= | =ripgrep=                             |
+
 - Usage for =adjust= :: =adjust brightness <+n%/-n%>=, =adjust volume <+n%/-n%>=, =adjust volume toggle=
